@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Preethi Ravikumar — Senior Software Engineer</title>
+  <meta name="description" content="Preethi Ravikumar — Senior Full Stack Engineer. React TypeScript Node AWS AI native. Portfolio and case studies." />
+  <style>
+    :root{
+      --bg:#0f1724; --card:#0b1220; --muted:#9aa4b2; --accent:#6ee7b7; --glass: rgba(255,255,255,0.03);
+      --maxw:1000px; --radius:12px; --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Segoe UI Mono", monospace;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background:linear-gradient(180deg,#071022 0%, #071827 60%); color:#e6eef6; -webkit-font-smoothing:antialiased;
+      padding:32px; display:flex; justify-content:center;
+    }
+    .wrap{width:100%; max-width:var(--maxw); margin:0 auto}
+    header{display:flex; gap:20px; align-items:center; margin-bottom:28px}
+    .avatar{
+      width:96px; height:96px; border-radius:14px; background:linear-gradient(135deg,var(--accent),#60a5fa);
+      display:flex; align-items:center; justify-content:center; font-weight:700; color:#042028; font-family:var(--mono);
+      box-shadow:0 6px 18px rgba(2,6,23,0.6);
+    }
+    .hero{flex:1}
+    h1{margin:0; font-size:22px}
+    p.lead{margin:6px 0 0; color:var(--muted)}
+    .card{background:linear-gradient(180deg,var(--card), rgba(255,255,255,0.02)); padding:18px; border-radius:var(--radius); margin-bottom:18px; box-shadow:0 6px 20px rgba(2,6,23,0.6)}
+    .meta{display:flex; gap:12px; flex-wrap:wrap; margin-top:10px}
+    .chip{background:var(--glass); padding:6px 10px; border-radius:999px; color:var(--muted); font-size:13px}
+    .grid{display:grid; grid-template-columns:1fr 360px; gap:18px}
+    @media (max-width:900px){ .grid{grid-template-columns:1fr} .avatar{width:72px;height:72px} }
+    h3{margin:0 0 10px}
+    ul.skills{display:flex; gap:8px; flex-wrap:wrap; padding:0; margin:0; list-style:none}
+    ul.skills li{background:rgba(255,255,255,0.03); padding:8px 10px; border-radius:8px; color:var(--muted); font-size:13px}
+    .projects .project{padding:12px; border-radius:10px; background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02)); margin-bottom:12px}
+    .project h4{margin:0 0 6px}
+    .project p{margin:0 0 8px; color:var(--muted); font-size:14px}
+    .project .meta{margin-top:6px}
+    .btn{display:inline-block; background:var(--accent); color:#042028; padding:8px 12px; border-radius:8px; text-decoration:none; font-weight:600}
+    footer{margin-top:18px; color:var(--muted); font-size:13px; text-align:center}
+    .contact-list{display:flex; flex-direction:column; gap:8px}
+    .contact-list a{color:var(--accent); text-decoration:none; font-weight:600}
+    .small{font-size:13px; color:var(--muted)}
+    .tagline{color:var(--muted); margin-top:8px}
+    .pill{display:inline-block; padding:6px 8px; background:rgba(255,255,255,0.02); border-radius:8px; color:var(--muted); font-size:13px}
+    .divider{height:1px; background:rgba(255,255,255,0.03); margin:12px 0; border-radius:2px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="avatar">PR</div>
+      <div class="hero">
+        <h1>Preethi Ravikumar — Senior Software Engineer</h1>
+        <p class="lead">Full‑stack engineer focused on product outcomes. React, TypeScript, Node, C#, cloud, and AI‑assisted development.</p>
+        <div class="meta">
+          <div class="chip">Melbourne, VIC</div>
+          <div class="chip">Open to Senior / Lead roles</div>
+          <div class="chip">Permanent Resident</div>
+        </div>
+      </div>
+      <div style="text-align:right">
+        <a class="btn" href="#contact">Contact</a>
+        <div class="tagline small">10+ years building web platforms and modernising legacy systems</div>
+      </div>
+    </header>
+
+    <div class="grid">
+      <main>
+        <section class="card about">
+          <h3>About</h3>
+          <p class="small">I build product, not just code. I enjoy shaping features from discovery through to production, breaking complex problems into small slices, and using AI‑assisted workflows to move faster while keeping quality high. Recent work includes modernising frontends, designing APIs, and owning production services end‑to‑end.</p>
+          <div class="divider"></div>
+          <h3>Core Skills</h3>
+          <ul class="skills">
+            <li>TypeScript</li><li>React</li><li>Node.js</li><li>GraphQL / REST</li><li>AWS Serverless</li><li>C# / ASP.NET</li><li>SQL / PostgreSQL</li><li>AI Tools Copilot Amazon Q</li>
+          </ul>
+        </section>
+
+        <section class="card projects">
+          <h3>Selected Projects</h3>
+
+          <div class="project">
+            <h4>React Performance and Component Library — NAB</h4>
+            <p>Led frontend improvements for a React application: component refactor, code splitting, lazy loading, and test coverage improvements using Jest. Focused on developer experience and measurable performance gains.</p>
+            <div class="meta small">
+              <span class="pill">Role Lead Engineer</span> <span style="margin-left:8px" class="pill">Impact Reduced initial load ~30%</span>
+            </div>
+          </div>
+
+          <div class="project">
+            <h4>Flood Prediction Platform Migration — Dialog IT</h4>
+            <p>Upgraded AngularJS to Angular 10+, implemented mapping integrations with ESRI, and improved backend APIs in C# and SQL Server. Delivered incremental migrations to reduce risk.</p>
+            <div class="meta small">
+              <span class="pill">Role Full Stack Developer</span> <span style="margin-left:8px" class="pill">Impact Faster feature rollout</span>
+            </div>
+          </div>
+
+          <div class="project">
+            <h4>Kiosk and Hardware Integration — Scientific Games</h4>
+            <p>Built kiosk UI and integrated printers and scanners using ASP.NET MVC and SignalR. Owned product delivery and QA readiness for trade shows and demos.</p>
+            <div class="meta small">
+              <span class="pill">Role Software Engineer</span> <span style="margin-left:8px" class="pill">Impact Reliable hardware integrations</span>
+            </div>
+          </div>
+
+          <div class="project">
+            <h4>AI Assisted Development Workflows</h4>
+            <p>Daily use of Copilot and Amazon Q to accelerate prototyping, generate tests, and produce documentation. Introduced pairing patterns that combine AI suggestions with human review to keep quality high.</p>
+            <div class="meta small">
+              <span class="pill">Role Process Lead</span> <span style="margin-left:8px" class="pill">Impact Faster delivery and clearer docs</span>
+            </div>
+          </div>
+
+        </section>
+
+        <section class="card experience">
+          <h3>Experience Snapshot</h3>
+          <p class="small"><strong>National Australia Bank</strong> — Software Engineer Analyst (React, Jest, performance)</p>
+          <p class="small"><strong>Dialog Information Technology</strong> — Web Developer (Angular, C#, ESRI)</p>
+          <p class="small"><strong>Scientific Games</strong> — Software Engineer (Kiosk systems, ASP.NET, SignalR)</p>
+        </section>
+      </main>
+
+      <aside>
+        <section class="card contact" id="contact">
+          <h3>Contact</h3>
+          <div class="contact-list">
+            <div><strong>Email</strong><br><a href="mailto:r.preethi80@gmail.com">r.preethi80@gmail.com</a></div>
+            <div><strong>Phone</strong><br><a href="tel:+61466634254">0466 634 254</a></div>
+            <div><strong>Location</strong><br><span class="small">Truganina, Victoria</span></div>
+            <div><strong>LinkedIn</strong><br><a href="#" id="linkedin">linkedin.com/in/yourprofile</a></div>
+            <div><strong>GitHub</strong><br><a href="#" id="github">github.com/yourhandle</a></div>
+          </div>
+
+          <div style="margin-top:12px">
+            <a class="btn" href="#projects" onclick="scrollToSection('projects')">View Projects</a>
+          </div>
+        </section>
+
+        <section class="card">
+          <h3>What I’m Looking For</h3>
+          <p class="small">Senior or Lead roles where I can own product slices end‑to‑end, shape architecture, mentor engineers, and apply AI‑native workflows to ship faster and safer.</p>
+        </section>
+
+        <section class="card">
+          <h3>Download</h3>
+          <p class="small">Resume and one‑page portfolio</p>
+          <a class="btn" href="#" id="download">Download PDF</a>
+        </section>
+      </aside>
+    </div>
+
+    <footer>
+      <div class="small">Built by Preethi Ravikumar — React TypeScript Node AWS — AI assisted development</div>
+    </footer>
+  </div>
+
+  <script>
+    function scrollToSection(id){
+      const el = document.getElementById(id);
+      if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+    }
+    // Replace placeholders with your real links
+    document.getElementById('linkedin').href = 'https://www.linkedin.com/in/yourprofile';
+    document.getElementById('github').href = 'https://github.com/yourhandle';
+    document.getElementById('download').href = '#'; // replace with resume PDF link if hosted
+  </script>
+</body>
+</html>
