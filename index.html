@@ -1,264 +1,481 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Preethi Ravikumar — Portfolio</title>
-  <meta name="description" content="Preethi Ravikumar — Senior Software Engineer. Single page portfolio with accessible tabs: Home, Projects, About, Interests." />
+  <meta charset="UTF-8" />
+  <title>Preethi Ravikumar</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <style>
-    :root{
-      --bg:#0b1220; --card:#0f1724; --muted:#9aa4b2; --accent:#6ee7b7;
-      --glass: rgba(255,255,255,0.03); --radius:14px; --maxw:1100px;
-      --glass-2: rgba(255,255,255,0.02);
-      --accent-2: #60a5fa;
-      --focus: 3px solid rgba(110,231,183,0.18);
-      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Segoe UI Mono", monospace;
+    :root {
+      --bg1: #ffe8e8;
+      --bg2: #fff7e6;
+      --bg3: #e8faff;
+      --fg: #333;
+      --muted: #666;
+      --accent: #ff7ac3;
+      --accent2: #7aafff;
+      --card: rgba(255, 255, 255, 0.7);
+      --border: rgba(0, 0, 0, 0.1);
+      --font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0; font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background: linear-gradient(180deg,#041021 0%, #071827 60%);
-      color:#e6eef6; -webkit-font-smoothing:antialiased; padding:28px;
-      display:flex; justify-content:center;
+
+    body {
+      margin: 0;
+      padding: 40px 16px;
+      background: linear-gradient(135deg, var(--bg1), var(--bg2), var(--bg3));
+      background-size: 300% 300%;
+      animation: gradientShift 12s ease infinite;
+      color: var(--fg);
+      font-family: var(--font);
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
     }
-    .wrap{width:100%; max-width:var(--maxw); margin:0 auto}
-    header{display:flex; gap:18px; align-items:center; margin-bottom:20px}
-    .logo{
-      width:84px; height:84px; border-radius:12px; display:flex; align-items:center; justify-content:center;
-      background:linear-gradient(135deg,var(--accent),var(--accent-2)); color:#042028; font-weight:800; font-family:var(--mono);
-      box-shadow:0 8px 30px rgba(2,6,23,0.6);
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
-    .hero{flex:1}
-    h1{margin:0; font-size:20px}
-    p.lead{margin:6px 0 0; color:var(--muted)}
-    .meta{display:flex; gap:10px; margin-top:10px; flex-wrap:wrap}
-    .chip{background:var(--glass); padding:6px 10px; border-radius:999px; color:var(--muted); font-size:13px}
-    .card{background:linear-gradient(180deg,var(--card), rgba(255,255,255,0.02)); padding:18px; border-radius:var(--radius); margin-bottom:18px; box-shadow:0 8px 30px rgba(2,6,23,0.6)}
-    nav.tabs{display:flex; gap:8px; margin-bottom:18px; align-items:center}
-    .tablist{display:flex; gap:8px; background:var(--glass-2); padding:6px; border-radius:12px}
-    .tab{
-      background:transparent; border:0; color:var(--muted); padding:10px 14px; border-radius:10px; cursor:pointer;
-      font-weight:600; transition:all .18s ease; outline:none;
+
+    .container {
+      width: 100%;
+      max-width: 850px;
     }
-    .tab[aria-selected="true"]{background:linear-gradient(90deg, rgba(110,231,183,0.12), rgba(96,165,250,0.08)); color:#dffbf0; box-shadow:0 6px 18px rgba(2,6,23,0.5)}
-    .tab:focus{box-shadow:var(--focus); border-radius:10px}
-    .grid{display:grid; grid-template-columns:1fr 340px; gap:18px}
-    @media (max-width:980px){ .grid{grid-template-columns:1fr} .logo{width:64px;height:64px} }
-    section.panel{display:none; animation:fade .28s ease both}
-    section.panel[aria-hidden="false"]{display:block}
-    @keyframes fade{from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:none}}
-    .projects-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:12px}
-    @media (max-width:700px){ .projects-grid{grid-template-columns:1fr} }
-    .project-card{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02)); padding:12px; border-radius:10px; border:1px solid rgba(255,255,255,0.02)}
-    .project-card h4{margin:0 0 6px}
-    .project-card p{margin:0; color:var(--muted); font-size:14px}
-    .about-list{display:grid; gap:8px}
-    .interests{display:flex; gap:8px; flex-wrap:wrap}
-    .interest{background:rgba(255,255,255,0.03); padding:8px 10px; border-radius:8px; color:var(--muted)}
-    .contact{display:flex; flex-direction:column; gap:8px}
-    .btn{display:inline-block; background:var(--accent); color:#042028; padding:8px 12px; border-radius:8px; text-decoration:none; font-weight:700}
-    footer{margin-top:18px; color:var(--muted); font-size:13px; text-align:center}
-    .sr-only{position:absolute; left:-10000px; top:auto; width:1px; height:1px; overflow:hidden}
-    .search{display:flex; gap:8px; align-items:center}
-    .search input{background:transparent; border:1px solid rgba(255,255,255,0.03); padding:8px 10px; border-radius:8px; color:var(--muted)}
-    .small{font-size:13px; color:var(--muted)}
-    .divider{height:1px; background:rgba(255,255,255,0.03); margin:12px 0; border-radius:2px}
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .avatar {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      margin: 0 auto 12px;
+      background: linear-gradient(135deg, #ff9ecb, #7ab8ff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      font-weight: 700;
+      color: white;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 30px;
+      font-weight: 700;
+    }
+
+    .header p {
+      margin: 6px 0 0;
+      color: var(--muted);
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .tab {
+      padding: 10px 18px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: white;
+      color: var(--muted);
+      cursor: pointer;
+      transition: 0.25s;
+      font-size: 14px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    }
+
+    .tab.active {
+      background: linear-gradient(135deg, #ff9ecb, #7ab8ff);
+      color: white;
+      border-color: transparent;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+    }
+
+    /* Cards */
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      background: var(--card);
+      backdrop-filter: blur(12px);
+      display: none;
+      animation: fadeIn 0.4s ease;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    }
+
+    .card.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .section-title {
+      font-size: 18px;
+      margin-bottom: 12px;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .item {
+      margin-bottom: 24px;
+      line-height: 1.7;
+      font-size: 15px;
+      color: #444;
+    }
+
+    .item strong {
+      font-size: 16px;
+      color: #7a5cff;
+    }
+
+    .skills-category {
+      margin-bottom: 24px;
+    }
+
+    .skills-category h3 {
+      margin: 0 0 8px;
+      font-size: 16px;
+      color: #7a5cff;
+    }
+
+    .skills-category p {
+      margin: 0;
+      color: #444;
+      line-height: 1.6;
+    }
+
+    .links a {
+      display: inline-block;
+      margin-right: 10px;
+      margin-top: 10px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      text-decoration: none;
+      background: white;
+      transition: 0.25s;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    }
+
+    .links a:hover {
+      background: linear-gradient(135deg, #ff9ecb, #7ab8ff);
+      color: white;
+      border-color: transparent;
+    }
+
+    /* ABOUT ME ANIMATIONS */
+    .about-wrapper {
+      padding: 10px;
+    }
+
+    .about-title {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: #ff7ac3;
+    }
+
+    .typewriter {
+      overflow: hidden;
+      border-right: 3px solid #ff7ac3;
+      white-space: normal;
+      width: 100%;
+      display: inline-block;
+      animation: typing 2.5s steps(40, end), blink 0.7s infinite;
+      font-size: 16px;
+      margin-bottom: 24px;
+    }
+
+    @keyframes typing {
+      from { max-width: 0; }
+      to { max-width: 100%; }
+    }
+
+    @keyframes blink {
+      0% { border-color: transparent; }
+      50% { border-color: #ff7ac3; }
+      100% { border-color: transparent; }
+    }
+
+    .timeline {
+      margin-top: 20px;
+      border-left: 3px dashed #ff7ac3;
+      padding-left: 20px;
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 28px;
+    }
+
+    .timeline-item .dot {
+      width: 14px;
+      height: 14px;
+      background: linear-gradient(135deg, #ff9ecb, #7ab8ff);
+      border-radius: 50%;
+      position: absolute;
+      left: -30px;
+      top: 4px;
+      box-shadow: 0 0 10px rgba(255, 122, 195, 0.6);
+    }
+
+    .timeline-item h3 {
+      margin: 0 0 6px;
+      font-size: 16px;
+      color: #7a5cff;
+    }
+
+    .timeline-item p {
+      margin: 0;
+      color: #444;
+      line-height: 1.6;
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(10px);
+      animation: fadeIn 0.8s forwards;
+    }
+
+    .delay-1 { animation-delay: 0.4s; }
+    .delay-2 { animation-delay: 0.8s; }
+    .delay-3 { animation-delay: 1.2s; }
   </style>
 </head>
+
 <body>
-  <div class="wrap" role="application" aria-labelledby="site-title">
-    <header>
-      <div class="logo" aria-hidden="true">PR</div>
-      <div class="hero">
-        <h1 id="site-title">Preethi Ravikumar — Senior Software Engineer</h1>
-        <p class="lead">Full‑stack engineer focused on product outcomes. React, TypeScript, Node, C#, cloud, and AI‑assisted development.</p>
-        <div class="meta">
-          <div class="chip">Melbourne, VIC</div>
-          <div class="chip">Open to Senior / Lead roles</div>
-          <div class="chip">10+ years</div>
-        </div>
-      </div>
+  <div class="container">
 
-      <div style="text-align:right">
-        <div class="search small" aria-hidden="false">
-          <input type="search" id="quick-search" placeholder="Search projects..." aria-label="Search projects">
-        </div>
-      </div>
-    </header>
-
-    <nav class="tabs card" aria-label="Primary">
-      <div class="tablist" role="tablist" aria-orientation="horizontal">
-        <button class="tab" role="tab" id="tab-home" aria-controls="panel-home" aria-selected="true" tabindex="0">Home</button>
-        <button class="tab" role="tab" id="tab-projects" aria-controls="panel-projects" aria-selected="false" tabindex="-1">Projects</button>
-        <button class="tab" role="tab" id="tab-about" aria-controls="panel-about" aria-selected="false" tabindex="-1">About</button>
-        <button class="tab" role="tab" id="tab-interests" aria-controls="panel-interests" aria-selected="false" tabindex="-1">Interests</button>
-      </div>
-    </nav>
-
-    <div class="grid">
-      <main>
-        <!-- Home -->
-        <section id="panel-home" class="panel card" role="tabpanel" aria-labelledby="tab-home" aria-hidden="false">
-          <h3>Home</h3>
-          <p class="small">I build product, not just code. I enjoy shaping features from discovery through to production, breaking complex problems into small slices, and using AI‑assisted workflows to move faster while keeping quality high.</p>
-          <div class="divider"></div>
-
-          <h4>Quick highlights</h4>
-          <ul class="about-list small">
-            <li><strong>End‑to‑end ownership:</strong> UI, API, data model, CI/CD, observability.</li>
-            <li><strong>AI‑native workflows:</strong> Copilot, Amazon Q, agentic patterns for tests and docs.</li>
-            <li><strong>Modernisation:</strong> Migrated legacy apps to React/TypeScript and cloud services.</li>
-          </ul>
-        </section>
-
-        <!-- Projects -->
-        <section id="panel-projects" class="panel card" role="tabpanel" aria-labelledby="tab-projects" aria-hidden="true">
-          <h3>Projects</h3>
-          <p class="small">Selected vertical slices and migrations — each card shows the problem, approach, and impact.</p>
-
-          <div class="projects-grid" id="projects-grid">
-            <article class="project-card" data-title="React Performance and Component Library">
-              <h4>React Performance and Component Library</h4>
-              <p>Led a frontend refactor: component library, code splitting, lazy loading, and improved test coverage.</p>
-              <p class="small"><strong>Impact:</strong> Reduced initial load ~30% and improved developer DX.</p>
-            </article>
-
-            <article class="project-card" data-title="Flood Prediction Migration">
-              <h4>Flood Prediction Platform Migration</h4>
-              <p>Incremental migration from AngularJS to Angular 10+, mapping integrations and API improvements.</p>
-              <p class="small"><strong>Impact:</strong> Faster feature rollout and reduced regression risk.</p>
-            </article>
-
-            <article class="project-card" data-title="Kiosk and Hardware Integration">
-              <h4>Kiosk and Hardware Integration</h4>
-              <p>Built kiosk UI and integrated printers/scanners using ASP.NET and SignalR for reliable demos.</p>
-              <p class="small"><strong>Impact:</strong> Stable hardware integrations for trade shows and pilots.</p>
-            </article>
-
-            <article class="project-card" data-title="AI Assisted Development Workflows">
-              <h4>AI Assisted Development Workflows</h4>
-              <p>Introduced pairing patterns combining AI suggestions with human review to generate tests and docs.</p>
-              <p class="small"><strong>Impact:</strong> Faster prototyping and clearer documentation.</p>
-            </article>
-          </div>
-        </section>
-
-        <!-- About -->
-        <section id="panel-about" class="panel card" role="tabpanel" aria-labelledby="tab-about" aria-hidden="true">
-          <h3>About</h3>
-          <p class="small">I’m a pragmatic engineer who values product outcomes, clean architecture, and mentoring teams. I enjoy working across frontend and backend, and I focus on measurable improvements.</p>
-          <div class="divider"></div>
-          <h4>Technical summary</h4>
-          <ul class="small about-list">
-            <li><strong>Frontend:</strong> React, TypeScript, Next.js, accessibility, performance tuning.</li>
-            <li><strong>Backend:</strong> Node.js, C#, ASP.NET, REST/GraphQL, PostgreSQL.</li>
-            <li><strong>Infra:</strong> Docker, Kubernetes, CI/CD, observability, cloud services.</li>
-            <li><strong>AI:</strong> Copilot, Amazon Q, agentic workflows for testing and docs.</li>
-          </ul>
-        </section>
-
-        <!-- Interests -->
-        <section id="panel-interests" class="panel card" role="tabpanel" aria-labelledby="tab-interests" aria-hidden="true">
-          <h3>Interests</h3>
-          <p class="small">Outside work I explore product design, data visualisation, and community meetups. I enjoy cycling and photography.</p>
-          <div class="divider"></div>
-          <div class="interests">
-            <span class="interest">Design Systems</span>
-            <span class="interest">Data Viz</span>
-            <span class="interest">AI Ethics</span>
-            <span class="interest">Open Source</span>
-            <span class="interest">Cycling</span>
-            <span class="interest">Photography</span>
-          </div>
-        </section>
-      </main>
-
-      <aside>
-        <section class="card contact" aria-label="Contact">
-          <h3>Contact</h3>
-          <div class="small"><strong>Email</strong><br><a href="mailto:r.preethi80@gmail.com" style="color:var(--accent)">r.preethi80@gmail.com</a></div>
-          <div class="small"><strong>Phone</strong><br><a href="tel:+61466634254" style="color:var(--accent)">0466 634 254</a></div>
-          <div class="small"><strong>Links</strong><br>
-            <a href="https://www.linkedin.com/in/yourprofile" style="color:var(--accent)">LinkedIn</a> ·
-            <a href="https://github.com/yourhandle" style="color:var(--accent)">GitHub</a>
-          </div>
-          <div style="margin-top:12px">
-            <a class="btn" href="#" onclick="alert('Resume download placeholder')">Download Resume</a>
-          </div>
-        </section>
-
-        <section class="card">
-          <h3>What I’m looking for</h3>
-          <p class="small">Senior or Lead roles where I can own product slices end‑to‑end, shape architecture, mentor engineers, and apply AI‑native workflows.</p>
-        </section>
-      </aside>
+    <!-- Header -->
+    <div class="header">
+      <div class="avatar">PR</div>
+      <h1>Preethi Ravikumar</h1>
+      <p>Software Engineer · Melbourne, Australia</p>
     </div>
 
-    <footer>
-      <div class="small">Built by Preethi Ravikumar — React · TypeScript · Node · AI‑assisted development</div>
-    </footer>
+    <!-- Tabs -->
+    <div class="tabs">
+      <div class="tab active" data-tab="home">Home</div>
+      <div class="tab" data-tab="experience">Experience</div>
+      <div class="tab" data-tab="skills">Skills</div>
+      <div class="tab" data-tab="contact">Contact</div>
+    </div>
+
+    <!-- HOME -->
+    <div class="card active" id="home">
+      <div class="about-wrapper">
+        <h2 class="about-title">My Journey So Far ✨</h2>
+
+        <p class="about-intro typewriter">
+          I’m Preethi — a developer who believes in taking 100% ownership, learning fast,
+          and building things that make people’s lives easier.
+        </p>
+
+        <div class="timeline">
+
+          <div class="timeline-item fade-in">
+            <div class="dot"></div>
+            <div class="content">
+              <h3>🎨 The UI Magician Phase</h3>
+              <p>
+                Started my career crafting clean UIs using <strong>AngularJS, HTML, CSS</strong>.
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-item fade-in delay-1">
+            <div class="dot"></div>
+            <div class="content">
+              <h3>🛠️ The Web Developer Upgrade</h3>
+              <p>
+                Leveled up into full web development with <strong>Angular 2</strong>,
+                <strong>SignalR</strong>, <strong>C#.NET</strong>, and <strong>SQL</strong>.
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-item fade-in delay-2">
+            <div class="dot"></div>
+            <div class="content">
+              <h3>🗺️ The Map & Data Era</h3>
+              <p>
+                Worked on <strong>Angular 10</strong> apps with <strong>ESRI Maps</strong>,
+                <strong>Angular Material</strong>, and <strong>AG Grids</strong>.
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-item fade-in delay-3">
+            <div class="dot"></div>
+            <div class="content">
+              <h3>🏦 The NAB Transformation</h3>
+              <p>
+                Built enterprise React apps with <strong>SASS</strong>, <strong>microservices</strong>,
+                <strong>GraphQL</strong>, <strong>REST APIs</strong>, <strong>SonarQube</strong>,
+                <strong>CI/CD pipelines</strong>, and <strong>100% unit test coverage</strong>.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- EXPERIENCE -->
+    <div class="card" id="experience">
+      <div class="section-title">My Career Adventures ✨</div>
+
+      <div class="item fade-in">
+        <strong>🎮 Scientific Games — Where It All Began (2015–2019)</strong><br>
+        This is where I transformed from “UI developer” into a multi-class full‑stack warrior.
+        I built AngularJS → Angular 2 UIs, real‑time features with <strong>SignalR</strong>,
+        backend logic with <strong>C#.NET</strong>, SQL queries, and integrated
+        <strong>REST + Web APIs</strong>.  
+        I even created a full <strong>Ionic + Angular 2</strong> POC app for G2E — because someone said
+        “Can we try this?” and I said “Sure, I’ll build the whole thing.”
+        <br><br>
+        During a company transition, half the team left… but I stayed, led, delivered, and held the fort.
+        This era taught me ownership, resilience, and how to ship under chaos.
+      </div>
+
+      <div class="item fade-in delay-1">
+        <strong>🐎 Racing Australia — The Fast & Furious Sprint (2021)</strong><br>
+        A short but powerful chapter.  
+        I jumped into Angular 8, .NET Core, Oracle DB, and CI/CD pipelines.
+        Fast-paced enhancements, national-level systems, and a warm-up lap before the big leagues.
+      </div>
+
+      <div class="item fade-in delay-2">
+        <strong>🌧️ Dialog — The Flood Zoom Era (2021–2022)</strong><br>
+        Imagine a project with massive datasets, live flood predictions, ESRI maps, AG Grids,
+        and government-level accuracy — that was Flood Zoom.
+        <br><br>
+        I worked with <strong>Angular 10+</strong>, <strong>ESRI Maps</strong>, <strong>AG Grid</strong>,
+        <strong>HTML/CSS</strong>, <strong>SQL</strong>, <strong>C#</strong>, and <strong>REST APIs</strong>
+        to build data-heavy, map-driven, mission-critical interfaces that help communities understand flood behavior.
+      </div>
+
+      <div class="item fade-in delay-3">
+        <strong>🏦 NAB — My React Renaissance (2022–Present)</strong><br>
+        This is where everything clicked.  
+        I built account opening forms, converted Figma designs into React + SCSS,
+        integrated microservices, worked with <strong>GraphQL</strong> and schema modelling,
+        implemented <strong>REST APIs</strong>, and contributed to mini-app architecture.
+        <br><br>
+        I delivered <strong>100% unit test coverage</strong>, kept SonarQube spotless, and ran CI/CD pipelines.
+        Beyond coding, I became the go‑to person for SIT support, production support, deployment support,
+        and fixing defects within SLA like a machine.
+        <br><br>
+        NAB is where I became a <strong>full‑stack, full‑ownership, ship‑it‑no‑matter‑what engineer</strong>.
+      </div>
+
+    </div>
+
+    <!-- SKILLS -->
+    <div class="card" id="skills">
+      <div class="section-title">My Superpowers ✨</div>
+
+      <div class="skills-category">
+        <h3>🎨 Frontend Wizardry</h3>
+        <p>
+          I build interfaces that don’t just work — they *feel* good.  
+          Angular (JS → 2 → 10+), React, JavaScript, TypeScript, HTML, SCSS, SASS,
+          Angular Material, AG Grid, ESRI Maps, and Figma-to-UI magic.
+        </p>
+      </div>
+
+      <div class="skills-category">
+        <h3>🧩 Architecture, Schema & API Brainpower</h3>
+        <p>
+          I think in data flows, schemas, and how everything talks to everything.  
+          At NAB, I worked with GraphQL + schema modelling.  
+          Across all companies, I integrated and implemented REST APIs, Web APIs,
+          and real-time SignalR connections.
+        </p>
+      </div>
+
+      <div class="skills-category">
+        <h3>⚙️ Backend & Integration</h3>
+        <p>
+          C#.NET, SQL queries, Web API integration, microservices, and real-time SignalR magic.
+        </p>
+      </div>
+
+      <div class="skills-category">
+        <h3>☁️ Cloud Curious (But Practical)</h3>
+        <p>
+          I know AWS basics — but I don’t chase certifications just to forget them later
+          like trigonometry and calculus.  
+          If I learn cloud, I want to *use* cloud.
+        </p>
+      </div>
+
+      <div class="skills-category">
+        <h3>🚀 DevOps & Delivery</h3>
+        <p>
+          CI/CD pipelines, Git branching, SonarQube, mini-app architecture,
+          deployment support, and SIT support.
+        </p>
+      </div>
+
+      <div class="skills-category">
+        <h3>🧠 Leadership & Ownership</h3>
+        <p>
+          I led a team for almost a year during a company transition —  
+          people left, chaos happened, but I stayed and delivered.  
+          Ownership isn’t a skill for me — it’s my default setting.
+        </p>
+      </div>
+    </div>
+
+    <!-- CONTACT -->
+    <div class="card" id="contact">
+      <div class="section-title">Contact</div>
+
+      <p>Email: <strong>r.preethi80@gmail.com</strong></p>
+      <p>Phone: <strong>0466 634 254</strong></p>
+      <p>Location: <strong>Truganina, Victoria</strong></p>
+
+      <div class="links">
+        <a href="https://www.linkedin.com/feed/" target="_blank">LinkedIn</a>
+        <a href="mailto:r.preethi80@gmail.com">Email</a>
+      </div>
+    </div>
+
   </div>
 
   <script>
-    // Accessible tabs: keyboard and click support
-    (function(){
-      const tabs = Array.from(document.querySelectorAll('[role="tab"]'));
-      const panels = Array.from(document.querySelectorAll('[role="tabpanel"]'));
-      const search = document.getElementById('quick-search');
-      const projectsGrid = document.getElementById('projects-grid');
+    const tabs = document.querySelectorAll(".tab");
+    const cards = document.querySelectorAll(".card");
 
-      function activateTab(tab){
-        tabs.forEach(t => {
-          const selected = t === tab;
-          t.setAttribute('aria-selected', selected ? 'true' : 'false');
-          t.tabIndex = selected ? 0 : -1;
-          const panel = document.getElementById(t.getAttribute('aria-controls'));
-          if(panel) panel.setAttribute('aria-hidden', selected ? 'false' : 'true');
-        });
-        tab.focus();
-      }
+    tabs.forEach(tab => {
+      tab.addEventListener("click", () => {
+        tabs.forEach(t => t.classList.remove("active"));
+        tab.classList.add("active");
 
-      tabs.forEach(tab => {
-        tab.addEventListener('click', () => activateTab(tab));
-        tab.addEventListener('keydown', (e) => {
-          const idx = tabs.indexOf(tab);
-          if(e.key === 'ArrowRight'){ e.preventDefault(); activateTab(tabs[(idx+1)%tabs.length]); }
-          if(e.key === 'ArrowLeft'){ e.preventDefault(); activateTab(tabs[(idx-1+tabs.length)%tabs.length]); }
-          if(e.key === 'Home'){ e.preventDefault(); activateTab(tabs[0]); }
-          if(e.key === 'End'){ e.preventDefault(); activateTab(tabs[tabs.length-1]); }
+        const target = tab.dataset.tab;
+        cards.forEach(card => {
+          card.classList.remove("active");
+          if (card.id === target) card.classList.add("active");
         });
       });
-
-      // Simple project search filter
-      if(search && projectsGrid){
-        search.addEventListener('input', (e) => {
-          const q = e.target.value.trim().toLowerCase();
-          const cards = Array.from(projectsGrid.querySelectorAll('.project-card'));
-          cards.forEach(card => {
-            const title = card.dataset.title.toLowerCase();
-            card.style.display = title.includes(q) ? '' : 'none';
-          });
-          // If user types, switch to Projects tab
-          if(q.length) activateTab(document.getElementById('tab-projects'));
-        });
-      }
-
-      // Deep link support: open panel from hash
-      function openFromHash(){
-        const hash = location.hash.replace('#','');
-        if(!hash) return;
-        const tab = tabs.find(t => t.id === 'tab-' + hash);
-        if(tab) activateTab(tab);
-      }
-      window.addEventListener('hashchange', openFromHash);
-      openFromHash();
-
-      // Small accessibility: focus outline for keyboard users only
-      let mouseUsed = false;
-      window.addEventListener('mousedown', () => { mouseUsed = true; document.body.style.outline = 'none'; });
-      window.addEventListener('keydown', (e) => { if(e.key === 'Tab') { mouseUsed = false; document.body.style.outline = ''; } });
-    })();
+    });
   </script>
+
 </body>
 </html>
