@@ -6,6 +6,89 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <style>
+    /* === Magical-Girl Sakura Patch ===
+   Add this after your base styles
+*/
+
+/* Root accents */
+:root{
+  --sakura-bg-1: #fff7fb;
+  --sakura-bg-2: #fff0f6;
+  --accent-pink: #ffb6d5;
+  --accent-deep: #ff7fbf;
+  --neon-pink: rgba(255,120,200,0.18);
+  --card-bg: rgba(255,255,255,0.88);
+  --muted: #6b6b7a;
+  --glass-shadow: 0 8px 30px rgba(120,80,120,0.06);
+  --radius: 12px;
+}
+
+/* Particle canvases sit behind the site */
+canvas.particle-layer{
+  position:fixed;
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+  z-index:0;
+}
+
+/* Ensure site content sits above particles */
+.site-root, #site-container, .container {
+  position:relative;
+  z-index:10;
+}
+
+/* Glitter shimmer overlay */
+.glitter{
+  pointer-events:none;
+  position:fixed;
+  inset:0;
+  z-index:9;
+  mix-blend-mode:screen;
+  opacity:0.12;
+  background-image:
+    radial-gradient(circle at 10% 20%, rgba(255,255,255,0.95) 0px, rgba(255,255,255,0) 6px),
+    radial-gradient(circle at 80% 40%, rgba(255,255,255,0.9) 0px, rgba(255,255,255,0) 6px),
+    radial-gradient(circle at 40% 80%, rgba(255,255,255,0.85) 0px, rgba(255,255,255,0) 6px);
+  filter:blur(8px);
+}
+
+/* Pastel gradients + neon glow for container */
+#site-container, .container {
+  background: linear-gradient(180deg, var(--sakura-bg-1), var(--sakura-bg-2));
+  border-radius: calc(var(--radius) + 8px);
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: blur(8px) saturate(120%);
+}
+
+/* Kawaii icons */
+.kawaii{ display:inline-flex; align-items:center; gap:8px; color:#b33a6a; }
+.kawaii .dot{ width:10px; height:10px; border-radius:50%; background:linear-gradient(180deg,#ffd6ea,#fff0f6); box-shadow:0 6px 12px rgba(255,120,180,0.06); }
+
+/* Envelope visuals (keeps your layout intact) */
+.envelope-wrap{ display:flex; align-items:center; justify-content:center; height:100%; }
+.envelope{ width:96px; height:64px; position:relative; transform-style:preserve-3d; transition:transform 420ms cubic-bezier(.2,.9,.3,1); cursor:pointer; }
+.envelope .body{ position:absolute; left:0; right:0; top:12px; height:40px; background:linear-gradient(180deg,#fff6fb,#ffeef8); border-radius:8px; border:1px solid rgba(200,160,190,0.12); display:flex; align-items:center; justify-content:center; color:#b33a6a; font-weight:600; box-shadow:0 8px 20px rgba(255,120,180,0.06); }
+.envelope .flap{ position:absolute; left:0; right:0; top:0; height:36px; background:linear-gradient(180deg,#ffdff0,#fff0f6); border-radius:8px 8px 0 0; transform-origin:top center; transform:translateY(0) rotateX(0deg); transition:transform 420ms cubic-bezier(.2,.9,.3,1); display:flex; align-items:center; justify-content:center; color:#9b2b5a; font-size:12px; }
+.envelope.open .flap{ transform:translateY(-6px) rotateX(-160deg); }
+.envelope .letter{ position:absolute; left:8px; right:8px; top:8px; height:36px; background:linear-gradient(180deg,#fff,#fff8fb); border-radius:6px; transform:translateY(8px); opacity:0; transition:all 420ms cubic-bezier(.2,.9,.3,1); display:flex; align-items:center; justify-content:center; color:#b33a6a; font-size:12px; padding:6px; box-shadow:0 6px 18px rgba(120,80,120,0.04); }
+.envelope.open .letter{ transform:translateY(-18px); opacity:1; }
+
+/* Tab active glow + sparkle trail */
+.tab.active{ background: linear-gradient(90deg, rgba(255,230,245,0.9), rgba(255,245,250,0.9)); box-shadow: 0 6px 18px rgba(255,120,180,0.08); transform:translateY(-2px); }
+.tab.active::after{ content:""; position:absolute; left:50%; transform:translateX(-50%); bottom:-10px; width:60%; height:6px; background:linear-gradient(90deg,#ffd6ea,#ffeef8); border-radius:6px; filter:blur(6px); opacity:0.9; }
+
+/* Contact grid fallback if not present */
+.contact-grid{ display:grid; grid-template-columns: 1fr 120px; gap:12px; align-items:center; }
+
+/* Small responsive tweaks */
+@media (max-width:980px){
+  .contact-grid{ grid-template-columns: 1fr; }
+  .envelope{ margin:8px auto; }
+}
+
     :root {
       --bg1: #ffe8e8;
       --bg2: #fff7e6;
@@ -93,6 +176,7 @@
       transition: 0.25s;
       font-size: 14px;
       box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+      position: relative;
     }
 
     .tab.active {
@@ -259,13 +343,21 @@
 </head>
 
 <body>
+    <!-- Particle canvases (behind entire site) -->
+<canvas id="bg-petals" class="particle-layer" aria-hidden="true"></canvas>
+<canvas id="bg-sparkles" class="particle-layer" aria-hidden="true"></canvas>
+<canvas id="bg-bubbles" class="particle-layer" aria-hidden="true"></canvas>
+
+<!-- Glitter shimmer overlay -->
+<div class="glitter" aria-hidden="true"></div>
+
   <div class="container">
 
     <!-- Header -->
     <div class="header">
       <div class="avatar">PR</div>
       <h1>Preethi Ravikumar</h1>
-      <p>Software Engineer · Melbourne, Australia</p>
+      <p>Senior Software Engineer · Melbourne, Australia</p>
     </div>
 
     <!-- Tabs -->
@@ -282,7 +374,7 @@
         <h2 class="about-title">My Journey So Far ✨</h2>
 
         <p class="about-intro typewriter">
-          I’m Preethi — a developer who believes in taking 100% ownership, learning fast,
+          I’m Preethi — a developer who believes in taking full ownership, learning fast,
           and building things that make people’s lives easier.
         </p>
 
@@ -500,6 +592,322 @@
       });
     });
   </script>
+<script>
+/* === Full Particle Animation System + Minimal hooks for sakura systems ===
+   Renders petals, sparkles, and bubbles on canvas layers.
+*/
+
+(function(){
+  const petalCanvas = document.getElementById('bg-petals');
+  const sparkleCanvas = document.getElementById('bg-sparkles');
+  const bubbleCanvas = document.getElementById('bg-bubbles');
+
+  // Initialize canvas contexts
+  const petalCtx = petalCanvas ? petalCanvas.getContext('2d') : null;
+  const sparkleCtx = sparkleCanvas ? sparkleCanvas.getContext('2d') : null;
+  const bubbleCtx = bubbleCanvas ? bubbleCanvas.getContext('2d') : null;
+
+  function resizeCanvas(canvas){
+    if(!canvas) return;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+
+  resizeCanvas(petalCanvas);
+  resizeCanvas(sparkleCanvas);
+  resizeCanvas(bubbleCanvas);
+
+  window.addEventListener('resize', () => {
+    resizeCanvas(petalCanvas);
+    resizeCanvas(sparkleCanvas);
+    resizeCanvas(bubbleCanvas);
+  });
+
+  // ===== PETALS (sakura) =====
+  const petals = [];
+  for(let i = 0; i < 15; i++){
+    petals.push({
+      x: Math.random() * (petalCanvas?.width || window.innerWidth),
+      y: Math.random() * (petalCanvas?.height || window.innerHeight),
+      vx: (Math.random() - 0.5) * 1.5,
+      vy: Math.random() * 0.5 + 0.3,
+      r: Math.random() * 8 + 4,
+      rotation: Math.random() * Math.PI * 2,
+      vr: (Math.random() - 0.5) * 0.1,
+      opacity: Math.random() * 0.5 + 0.3,
+      life: 1,
+      age: 0
+    });
+  }
+
+  function drawPetal(ctx, x, y, r, rotation, opacity){
+    if(!ctx) return;
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate(rotation);
+    ctx.fillStyle = `rgba(255, 182, 193, ${opacity})`;
+    ctx.beginPath();
+    ctx.ellipse(0, 0, r, r * 0.6, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function updatePetals(){
+    if(!petalCanvas || !petalCtx) return;
+    const w = petalCanvas.width;
+    const h = petalCanvas.height;
+
+    petals.forEach(petal => {
+      petal.x += petal.vx;
+      petal.y += petal.vy;
+      petal.rotation += petal.vr;
+      petal.age += 0.01;
+      if(petal.age > petal.life) petal.age = 0;
+
+      if(petal.x < -20 || petal.x > w + 20 || petal.y > h + 20){
+        petal.x = Math.random() * w;
+        petal.y = -20;
+      }
+
+      drawPetal(petalCtx, petal.x, petal.y, petal.r, petal.rotation, petal.opacity);
+    });
+  }
+
+  // ===== SPARKLES =====
+  const sparkles = [];
+
+  function drawSparkle(ctx, x, y, r, opacity){
+    if(!ctx) return;
+    ctx.fillStyle = `rgba(255, 200, 220, ${opacity})`;
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  function updateSparkles(){
+    if(!sparkleCanvas || !sparkleCtx) return;
+    const w = sparkleCanvas.width;
+    const h = sparkleCanvas.height;
+
+    for(let i = sparkles.length - 1; i >= 0; i--){
+      const spark = sparkles[i];
+      spark.x += spark.vx;
+      spark.y += spark.vy;
+      spark.age += 1;
+      spark.life--;
+      spark.alpha = (spark.life / 100) * 0.8;
+
+      if(spark.life <= 0){
+        sparkles.splice(i, 1);
+      } else {
+        drawSparkle(sparkleCtx, spark.x, spark.y, spark.r, spark.alpha);
+      }
+    }
+  }
+
+  // ===== BUBBLES =====
+  const bubbles = [];
+  for(let i = 0; i < 8; i++){
+    bubbles.push({
+      x: Math.random() * (bubbleCanvas?.width || window.innerWidth),
+      y: Math.random() * (bubbleCanvas?.height || window.innerHeight),
+      r: Math.random() * 20 + 10,
+      vx: (Math.random() - 0.5) * 0.8,
+      vy: Math.random() * 0.3 + 0.1,
+      opacity: Math.random() * 0.2 + 0.05
+    });
+  }
+
+  function drawBubble(ctx, x, y, r, opacity){
+    if(!ctx) return;
+    ctx.strokeStyle = `rgba(255, 200, 220, ${opacity})`;
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI * 2);
+    ctx.stroke();
+  }
+
+  function updateBubbles(){
+    if(!bubbleCanvas || !bubbleCtx) return;
+    const w = bubbleCanvas.width;
+    const h = bubbleCanvas.height;
+
+    bubbles.forEach(bubble => {
+      bubble.x += bubble.vx;
+      bubble.y += bubble.vy;
+
+      if(bubble.x < -50 || bubble.x > w + 50 || bubble.y < -50 || bubble.y > h + 50){
+        bubble.x = Math.random() * w;
+        bubble.y = h + 20;
+      }
+
+      drawBubble(bubbleCtx, bubble.x, bubble.y, bubble.r, bubble.opacity);
+    });
+  }
+
+  // ===== MAIN ANIMATION LOOP =====
+  function animate(){
+    if(petalCtx) petalCtx.clearRect(0, 0, petalCanvas.width, petalCanvas.height);
+    if(sparkleCtx) sparkleCtx.clearRect(0, 0, sparkleCanvas.width, sparkleCanvas.height);
+    if(bubbleCtx) bubbleCtx.clearRect(0, 0, bubbleCanvas.width, bubbleCanvas.height);
+
+    updatePetals();
+    updateSparkles();
+    updateBubbles();
+
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+
+  // Store references for API calls
+  window.__MAGIC_PETALS = { particles: petals, canvas: petalCanvas };
+  window.__MAGIC_SPARKLES = { sparks: sparkles, canvas: sparkleCanvas };
+  window.__MAGIC_BUBBLES = { bubbles: bubbles, canvas: bubbleCanvas };
+
+  // small helper to compute canvas-local coords from screen coords
+  function screenToCanvas(screenX, screenY, canvas){
+    if(!canvas) return { x: screenX, y: screenY };
+    const rect = canvas.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    return { x: (screenX - rect.left) * (canvas.width / rect.width) / dpr, y: (screenY - rect.top) * (canvas.height / rect.height) / dpr };
+  }
+
+  // sparkle burst API used by tab-triggered magic and envelope
+  window.__MAGIC_API = {
+    sparkleBurst(screenX, screenY, amount){
+      const s = window.__MAGIC_SPARKLES;
+      if(!s || !s.canvas) return;
+      const c = s.canvas;
+      const pos = screenToCanvas(screenX, screenY, c);
+      for(let i=0;i<amount;i++){
+        s.sparks.push({
+          x: pos.x + (Math.random()-0.5)*80,
+          y: pos.y + (Math.random()-0.5)*80,
+          r: Math.random()*3 + 1,
+          life: Math.random()*60 + 20,
+          age: 0,
+          vx: (Math.random()-0.5)*2,
+          vy: (Math.random()-0.5)*2,
+          alpha: 0.6 + Math.random()*0.4
+        });
+      }
+    },
+    sakuraSwirl(screenX, screenY, radius){
+      const p = window.__MAGIC_PETALS;
+      if(!p || !p.particles) return;
+      const c = p.canvas;
+      const pos = screenToCanvas(screenX, screenY, c);
+      for(const petal of p.particles){
+        const dx = petal.x - pos.x;
+        const dy = petal.y - pos.y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        if(dist < radius){
+          const force = (1 - (dist / radius)) * 2.2;
+          const angle = Math.atan2(dy, dx) + Math.PI/2;
+          petal.vx = (petal.vx || 0) + Math.cos(angle) * 0.6 * force;
+          petal.vy = (petal.vy || 0) + Math.sin(angle) * 0.6 * force * 0.6;
+          petal.vr = (petal.vr || 0) + (Math.random()-0.5) * 0.06 * force;
+        }
+      }
+    },
+    pulseGlow(){
+      const container = document.getElementById('site-container') || document.querySelector('.container');
+      if(!container) return;
+      container.animate([
+        { boxShadow: '0 6px 20px rgba(255,120,180,0.06)' },
+        { boxShadow: '0 18px 40px rgba(255,120,180,0.14)' },
+        { boxShadow: '0 6px 20px rgba(255,120,180,0.06)' }
+      ], { duration: 700, easing: 'cubic-bezier(.2,.9,.3,1)' });
+    }
+  };
+
+  // Soft chime via WebAudio (very small, safe)
+  (function initChime(){
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    if(!AudioContext) return;
+    const ctx = new AudioContext();
+    window.playChime = function(volume = 0.06){
+      try{
+        const now = ctx.currentTime;
+        const osc1 = ctx.createOscillator();
+        const osc2 = ctx.createOscillator();
+        const gain = ctx.createGain();
+        const hp = ctx.createBiquadFilter();
+        const delay = ctx.createDelay();
+        const fb = ctx.createGain();
+
+        osc1.type = 'sine';
+        osc2.type = 'sine';
+        osc1.frequency.setValueAtTime(880, now);
+        osc2.frequency.setValueAtTime(1320, now);
+        osc2.detune.value = 8 + Math.random()*6;
+
+        gain.gain.setValueAtTime(0, now);
+        gain.gain.linearRampToValueAtTime(volume, now + 0.01);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 1.2);
+
+        hp.type = 'highpass';
+        hp.frequency.value = 220;
+
+        delay.delayTime.value = 0.12;
+        fb.gain.value = 0.18;
+
+        osc1.connect(gain);
+        osc2.connect(gain);
+        gain.connect(hp);
+        hp.connect(delay);
+        delay.connect(fb);
+        fb.connect(delay);
+        delay.connect(ctx.destination);
+        hp.connect(ctx.destination);
+
+        osc1.start(now);
+        osc2.start(now);
+        osc1.stop(now + 1.4);
+        osc2.stop(now + 1.4);
+      }catch(e){
+        console.warn('Chime error', e);
+      }
+    };
+  })();
+
+  // Expose convenience aliases used by the merged file
+  window.__TAB_MAGIC = window.__TAB_MAGIC || {
+    sparkleBurst: window.__MAGIC_API.sparkleBurst,
+    sakuraSwirl: window.__MAGIC_API.sakuraSwirl,
+    pulseGlow: window.__MAGIC_API.pulseGlow
+  };
+
+  // If your file has a send button/envelope, wire a safe click handler if not present
+  document.addEventListener('DOMContentLoaded', function(){
+    const envelope = document.getElementById('envelope');
+    const sendBtn = document.getElementById('send-btn');
+    if(envelope && !envelope.__patched){
+      envelope.addEventListener('click', function(){
+        envelope.classList.toggle('open');
+        const rect = envelope.getBoundingClientRect();
+        window.__MAGIC_API.sparkleBurst(rect.left + rect.width/2, rect.top + rect.height/2, 18);
+        if(window.playChime) window.playChime(0.06);
+      });
+      envelope.__patched = true;
+    }
+    if(sendBtn && !sendBtn.__patched){
+      sendBtn.addEventListener('click', function(){
+        const envelopeEl = document.getElementById('envelope');
+        if(envelopeEl){
+          envelopeEl.classList.add('open');
+          setTimeout(()=> envelopeEl.classList.remove('open'), 1200);
+          const rect = envelopeEl.getBoundingClientRect();
+          window.__MAGIC_API.sparkleBurst(rect.left + rect.width/2, rect.top + rect.height/2, 28);
+          if(window.playChime) window.playChime(0.06);
+        }
+      });
+      sendBtn.__patched = true;
+    }
+  });
+})();
+</script>
 
 </body>
 </html>
