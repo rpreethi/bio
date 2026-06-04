@@ -3,171 +3,262 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Preethi Ravikumar — Senior Software Engineer</title>
-  <meta name="description" content="Preethi Ravikumar — Senior Full Stack Engineer. React TypeScript Node AWS AI native. Portfolio and case studies." />
+  <title>Preethi Ravikumar — Portfolio</title>
+  <meta name="description" content="Preethi Ravikumar — Senior Software Engineer. Single page portfolio with accessible tabs: Home, Projects, About, Interests." />
   <style>
     :root{
-      --bg:#0f1724; --card:#0b1220; --muted:#9aa4b2; --accent:#6ee7b7; --glass: rgba(255,255,255,0.03);
-      --maxw:1000px; --radius:12px; --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Segoe UI Mono", monospace;
+      --bg:#0b1220; --card:#0f1724; --muted:#9aa4b2; --accent:#6ee7b7;
+      --glass: rgba(255,255,255,0.03); --radius:14px; --maxw:1100px;
+      --glass-2: rgba(255,255,255,0.02);
+      --accent-2: #60a5fa;
+      --focus: 3px solid rgba(110,231,183,0.18);
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Segoe UI Mono", monospace;
     }
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
       margin:0; font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background:linear-gradient(180deg,#071022 0%, #071827 60%); color:#e6eef6; -webkit-font-smoothing:antialiased;
-      padding:32px; display:flex; justify-content:center;
+      background: linear-gradient(180deg,#041021 0%, #071827 60%);
+      color:#e6eef6; -webkit-font-smoothing:antialiased; padding:28px;
+      display:flex; justify-content:center;
     }
     .wrap{width:100%; max-width:var(--maxw); margin:0 auto}
-    header{display:flex; gap:20px; align-items:center; margin-bottom:28px}
-    .avatar{
-      width:96px; height:96px; border-radius:14px; background:linear-gradient(135deg,var(--accent),#60a5fa);
-      display:flex; align-items:center; justify-content:center; font-weight:700; color:#042028; font-family:var(--mono);
-      box-shadow:0 6px 18px rgba(2,6,23,0.6);
+    header{display:flex; gap:18px; align-items:center; margin-bottom:20px}
+    .logo{
+      width:84px; height:84px; border-radius:12px; display:flex; align-items:center; justify-content:center;
+      background:linear-gradient(135deg,var(--accent),var(--accent-2)); color:#042028; font-weight:800; font-family:var(--mono);
+      box-shadow:0 8px 30px rgba(2,6,23,0.6);
     }
     .hero{flex:1}
-    h1{margin:0; font-size:22px}
+    h1{margin:0; font-size:20px}
     p.lead{margin:6px 0 0; color:var(--muted)}
-    .card{background:linear-gradient(180deg,var(--card), rgba(255,255,255,0.02)); padding:18px; border-radius:var(--radius); margin-bottom:18px; box-shadow:0 6px 20px rgba(2,6,23,0.6)}
-    .meta{display:flex; gap:12px; flex-wrap:wrap; margin-top:10px}
+    .meta{display:flex; gap:10px; margin-top:10px; flex-wrap:wrap}
     .chip{background:var(--glass); padding:6px 10px; border-radius:999px; color:var(--muted); font-size:13px}
-    .grid{display:grid; grid-template-columns:1fr 360px; gap:18px}
-    @media (max-width:900px){ .grid{grid-template-columns:1fr} .avatar{width:72px;height:72px} }
-    h3{margin:0 0 10px}
-    ul.skills{display:flex; gap:8px; flex-wrap:wrap; padding:0; margin:0; list-style:none}
-    ul.skills li{background:rgba(255,255,255,0.03); padding:8px 10px; border-radius:8px; color:var(--muted); font-size:13px}
-    .projects .project{padding:12px; border-radius:10px; background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02)); margin-bottom:12px}
-    .project h4{margin:0 0 6px}
-    .project p{margin:0 0 8px; color:var(--muted); font-size:14px}
-    .project .meta{margin-top:6px}
-    .btn{display:inline-block; background:var(--accent); color:#042028; padding:8px 12px; border-radius:8px; text-decoration:none; font-weight:600}
+    .card{background:linear-gradient(180deg,var(--card), rgba(255,255,255,0.02)); padding:18px; border-radius:var(--radius); margin-bottom:18px; box-shadow:0 8px 30px rgba(2,6,23,0.6)}
+    nav.tabs{display:flex; gap:8px; margin-bottom:18px; align-items:center}
+    .tablist{display:flex; gap:8px; background:var(--glass-2); padding:6px; border-radius:12px}
+    .tab{
+      background:transparent; border:0; color:var(--muted); padding:10px 14px; border-radius:10px; cursor:pointer;
+      font-weight:600; transition:all .18s ease; outline:none;
+    }
+    .tab[aria-selected="true"]{background:linear-gradient(90deg, rgba(110,231,183,0.12), rgba(96,165,250,0.08)); color:#dffbf0; box-shadow:0 6px 18px rgba(2,6,23,0.5)}
+    .tab:focus{box-shadow:var(--focus); border-radius:10px}
+    .grid{display:grid; grid-template-columns:1fr 340px; gap:18px}
+    @media (max-width:980px){ .grid{grid-template-columns:1fr} .logo{width:64px;height:64px} }
+    section.panel{display:none; animation:fade .28s ease both}
+    section.panel[aria-hidden="false"]{display:block}
+    @keyframes fade{from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:none}}
+    .projects-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:12px}
+    @media (max-width:700px){ .projects-grid{grid-template-columns:1fr} }
+    .project-card{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02)); padding:12px; border-radius:10px; border:1px solid rgba(255,255,255,0.02)}
+    .project-card h4{margin:0 0 6px}
+    .project-card p{margin:0; color:var(--muted); font-size:14px}
+    .about-list{display:grid; gap:8px}
+    .interests{display:flex; gap:8px; flex-wrap:wrap}
+    .interest{background:rgba(255,255,255,0.03); padding:8px 10px; border-radius:8px; color:var(--muted)}
+    .contact{display:flex; flex-direction:column; gap:8px}
+    .btn{display:inline-block; background:var(--accent); color:#042028; padding:8px 12px; border-radius:8px; text-decoration:none; font-weight:700}
     footer{margin-top:18px; color:var(--muted); font-size:13px; text-align:center}
-    .contact-list{display:flex; flex-direction:column; gap:8px}
-    .contact-list a{color:var(--accent); text-decoration:none; font-weight:600}
+    .sr-only{position:absolute; left:-10000px; top:auto; width:1px; height:1px; overflow:hidden}
+    .search{display:flex; gap:8px; align-items:center}
+    .search input{background:transparent; border:1px solid rgba(255,255,255,0.03); padding:8px 10px; border-radius:8px; color:var(--muted)}
     .small{font-size:13px; color:var(--muted)}
-    .tagline{color:var(--muted); margin-top:8px}
-    .pill{display:inline-block; padding:6px 8px; background:rgba(255,255,255,0.02); border-radius:8px; color:var(--muted); font-size:13px}
     .divider{height:1px; background:rgba(255,255,255,0.03); margin:12px 0; border-radius:2px}
   </style>
 </head>
 <body>
-  <div class="wrap">
+  <div class="wrap" role="application" aria-labelledby="site-title">
     <header>
-      <div class="avatar">PR</div>
+      <div class="logo" aria-hidden="true">PR</div>
       <div class="hero">
-        <h1>Preethi Ravikumar — Senior Software Engineer</h1>
+        <h1 id="site-title">Preethi Ravikumar — Senior Software Engineer</h1>
         <p class="lead">Full‑stack engineer focused on product outcomes. React, TypeScript, Node, C#, cloud, and AI‑assisted development.</p>
         <div class="meta">
           <div class="chip">Melbourne, VIC</div>
           <div class="chip">Open to Senior / Lead roles</div>
-          <div class="chip">Permanent Resident</div>
+          <div class="chip">10+ years</div>
         </div>
       </div>
+
       <div style="text-align:right">
-        <a class="btn" href="#contact">Contact</a>
-        <div class="tagline small">10+ years building web platforms and modernising legacy systems</div>
+        <div class="search small" aria-hidden="false">
+          <input type="search" id="quick-search" placeholder="Search projects..." aria-label="Search projects">
+        </div>
       </div>
     </header>
 
+    <nav class="tabs card" aria-label="Primary">
+      <div class="tablist" role="tablist" aria-orientation="horizontal">
+        <button class="tab" role="tab" id="tab-home" aria-controls="panel-home" aria-selected="true" tabindex="0">Home</button>
+        <button class="tab" role="tab" id="tab-projects" aria-controls="panel-projects" aria-selected="false" tabindex="-1">Projects</button>
+        <button class="tab" role="tab" id="tab-about" aria-controls="panel-about" aria-selected="false" tabindex="-1">About</button>
+        <button class="tab" role="tab" id="tab-interests" aria-controls="panel-interests" aria-selected="false" tabindex="-1">Interests</button>
+      </div>
+    </nav>
+
     <div class="grid">
       <main>
-        <section class="card about">
-          <h3>About</h3>
-          <p class="small">I build product, not just code. I enjoy shaping features from discovery through to production, breaking complex problems into small slices, and using AI‑assisted workflows to move faster while keeping quality high. Recent work includes modernising frontends, designing APIs, and owning production services end‑to‑end.</p>
+        <!-- Home -->
+        <section id="panel-home" class="panel card" role="tabpanel" aria-labelledby="tab-home" aria-hidden="false">
+          <h3>Home</h3>
+          <p class="small">I build product, not just code. I enjoy shaping features from discovery through to production, breaking complex problems into small slices, and using AI‑assisted workflows to move faster while keeping quality high.</p>
           <div class="divider"></div>
-          <h3>Core Skills</h3>
-          <ul class="skills">
-            <li>TypeScript</li><li>React</li><li>Node.js</li><li>GraphQL / REST</li><li>AWS Serverless</li><li>C# / ASP.NET</li><li>SQL / PostgreSQL</li><li>AI Tools Copilot Amazon Q</li>
+
+          <h4>Quick highlights</h4>
+          <ul class="about-list small">
+            <li><strong>End‑to‑end ownership:</strong> UI, API, data model, CI/CD, observability.</li>
+            <li><strong>AI‑native workflows:</strong> Copilot, Amazon Q, agentic patterns for tests and docs.</li>
+            <li><strong>Modernisation:</strong> Migrated legacy apps to React/TypeScript and cloud services.</li>
           </ul>
         </section>
 
-        <section class="card projects">
-          <h3>Selected Projects</h3>
+        <!-- Projects -->
+        <section id="panel-projects" class="panel card" role="tabpanel" aria-labelledby="tab-projects" aria-hidden="true">
+          <h3>Projects</h3>
+          <p class="small">Selected vertical slices and migrations — each card shows the problem, approach, and impact.</p>
 
-          <div class="project">
-            <h4>React Performance and Component Library — NAB</h4>
-            <p>Led frontend improvements for a React application: component refactor, code splitting, lazy loading, and test coverage improvements using Jest. Focused on developer experience and measurable performance gains.</p>
-            <div class="meta small">
-              <span class="pill">Role Lead Engineer</span> <span style="margin-left:8px" class="pill">Impact Reduced initial load ~30%</span>
-            </div>
+          <div class="projects-grid" id="projects-grid">
+            <article class="project-card" data-title="React Performance and Component Library">
+              <h4>React Performance and Component Library</h4>
+              <p>Led a frontend refactor: component library, code splitting, lazy loading, and improved test coverage.</p>
+              <p class="small"><strong>Impact:</strong> Reduced initial load ~30% and improved developer DX.</p>
+            </article>
+
+            <article class="project-card" data-title="Flood Prediction Migration">
+              <h4>Flood Prediction Platform Migration</h4>
+              <p>Incremental migration from AngularJS to Angular 10+, mapping integrations and API improvements.</p>
+              <p class="small"><strong>Impact:</strong> Faster feature rollout and reduced regression risk.</p>
+            </article>
+
+            <article class="project-card" data-title="Kiosk and Hardware Integration">
+              <h4>Kiosk and Hardware Integration</h4>
+              <p>Built kiosk UI and integrated printers/scanners using ASP.NET and SignalR for reliable demos.</p>
+              <p class="small"><strong>Impact:</strong> Stable hardware integrations for trade shows and pilots.</p>
+            </article>
+
+            <article class="project-card" data-title="AI Assisted Development Workflows">
+              <h4>AI Assisted Development Workflows</h4>
+              <p>Introduced pairing patterns combining AI suggestions with human review to generate tests and docs.</p>
+              <p class="small"><strong>Impact:</strong> Faster prototyping and clearer documentation.</p>
+            </article>
           </div>
-
-          <div class="project">
-            <h4>Flood Prediction Platform Migration — Dialog IT</h4>
-            <p>Upgraded AngularJS to Angular 10+, implemented mapping integrations with ESRI, and improved backend APIs in C# and SQL Server. Delivered incremental migrations to reduce risk.</p>
-            <div class="meta small">
-              <span class="pill">Role Full Stack Developer</span> <span style="margin-left:8px" class="pill">Impact Faster feature rollout</span>
-            </div>
-          </div>
-
-          <div class="project">
-            <h4>Kiosk and Hardware Integration — Scientific Games</h4>
-            <p>Built kiosk UI and integrated printers and scanners using ASP.NET MVC and SignalR. Owned product delivery and QA readiness for trade shows and demos.</p>
-            <div class="meta small">
-              <span class="pill">Role Software Engineer</span> <span style="margin-left:8px" class="pill">Impact Reliable hardware integrations</span>
-            </div>
-          </div>
-
-          <div class="project">
-            <h4>AI Assisted Development Workflows</h4>
-            <p>Daily use of Copilot and Amazon Q to accelerate prototyping, generate tests, and produce documentation. Introduced pairing patterns that combine AI suggestions with human review to keep quality high.</p>
-            <div class="meta small">
-              <span class="pill">Role Process Lead</span> <span style="margin-left:8px" class="pill">Impact Faster delivery and clearer docs</span>
-            </div>
-          </div>
-
         </section>
 
-        <section class="card experience">
-          <h3>Experience Snapshot</h3>
-          <p class="small"><strong>National Australia Bank</strong> — Software Engineer Analyst (React, Jest, performance)</p>
-          <p class="small"><strong>Dialog Information Technology</strong> — Web Developer (Angular, C#, ESRI)</p>
-          <p class="small"><strong>Scientific Games</strong> — Software Engineer (Kiosk systems, ASP.NET, SignalR)</p>
+        <!-- About -->
+        <section id="panel-about" class="panel card" role="tabpanel" aria-labelledby="tab-about" aria-hidden="true">
+          <h3>About</h3>
+          <p class="small">I’m a pragmatic engineer who values product outcomes, clean architecture, and mentoring teams. I enjoy working across frontend and backend, and I focus on measurable improvements.</p>
+          <div class="divider"></div>
+          <h4>Technical summary</h4>
+          <ul class="small about-list">
+            <li><strong>Frontend:</strong> React, TypeScript, Next.js, accessibility, performance tuning.</li>
+            <li><strong>Backend:</strong> Node.js, C#, ASP.NET, REST/GraphQL, PostgreSQL.</li>
+            <li><strong>Infra:</strong> Docker, Kubernetes, CI/CD, observability, cloud services.</li>
+            <li><strong>AI:</strong> Copilot, Amazon Q, agentic workflows for testing and docs.</li>
+          </ul>
+        </section>
+
+        <!-- Interests -->
+        <section id="panel-interests" class="panel card" role="tabpanel" aria-labelledby="tab-interests" aria-hidden="true">
+          <h3>Interests</h3>
+          <p class="small">Outside work I explore product design, data visualisation, and community meetups. I enjoy cycling and photography.</p>
+          <div class="divider"></div>
+          <div class="interests">
+            <span class="interest">Design Systems</span>
+            <span class="interest">Data Viz</span>
+            <span class="interest">AI Ethics</span>
+            <span class="interest">Open Source</span>
+            <span class="interest">Cycling</span>
+            <span class="interest">Photography</span>
+          </div>
         </section>
       </main>
 
       <aside>
-        <section class="card contact" id="contact">
+        <section class="card contact" aria-label="Contact">
           <h3>Contact</h3>
-          <div class="contact-list">
-            <div><strong>Email</strong><br><a href="mailto:r.preethi80@gmail.com">r.preethi80@gmail.com</a></div>
-            <div><strong>Phone</strong><br><a href="tel:+61466634254">0466 634 254</a></div>
-            <div><strong>Location</strong><br><span class="small">Truganina, Victoria</span></div>
-            <div><strong>LinkedIn</strong><br><a href="#" id="linkedin">linkedin.com/in/yourprofile</a></div>
-            <div><strong>GitHub</strong><br><a href="#" id="github">github.com/yourhandle</a></div>
+          <div class="small"><strong>Email</strong><br><a href="mailto:r.preethi80@gmail.com" style="color:var(--accent)">r.preethi80@gmail.com</a></div>
+          <div class="small"><strong>Phone</strong><br><a href="tel:+61466634254" style="color:var(--accent)">0466 634 254</a></div>
+          <div class="small"><strong>Links</strong><br>
+            <a href="https://www.linkedin.com/in/yourprofile" style="color:var(--accent)">LinkedIn</a> ·
+            <a href="https://github.com/yourhandle" style="color:var(--accent)">GitHub</a>
           </div>
-
           <div style="margin-top:12px">
-            <a class="btn" href="#projects" onclick="scrollToSection('projects')">View Projects</a>
+            <a class="btn" href="#" onclick="alert('Resume download placeholder')">Download Resume</a>
           </div>
         </section>
 
         <section class="card">
-          <h3>What I’m Looking For</h3>
-          <p class="small">Senior or Lead roles where I can own product slices end‑to‑end, shape architecture, mentor engineers, and apply AI‑native workflows to ship faster and safer.</p>
-        </section>
-
-        <section class="card">
-          <h3>Download</h3>
-          <p class="small">Resume and one‑page portfolio</p>
-          <a class="btn" href="#" id="download">Download PDF</a>
+          <h3>What I’m looking for</h3>
+          <p class="small">Senior or Lead roles where I can own product slices end‑to‑end, shape architecture, mentor engineers, and apply AI‑native workflows.</p>
         </section>
       </aside>
     </div>
 
     <footer>
-      <div class="small">Built by Preethi Ravikumar — React TypeScript Node AWS — AI assisted development</div>
+      <div class="small">Built by Preethi Ravikumar — React · TypeScript · Node · AI‑assisted development</div>
     </footer>
   </div>
 
   <script>
-    function scrollToSection(id){
-      const el = document.getElementById(id);
-      if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
-    }
-    // Replace placeholders with your real links
-    document.getElementById('linkedin').href = 'https://www.linkedin.com/in/yourprofile';
-    document.getElementById('github').href = 'https://github.com/yourhandle';
-    document.getElementById('download').href = '#'; // replace with resume PDF link if hosted
+    // Accessible tabs: keyboard and click support
+    (function(){
+      const tabs = Array.from(document.querySelectorAll('[role="tab"]'));
+      const panels = Array.from(document.querySelectorAll('[role="tabpanel"]'));
+      const search = document.getElementById('quick-search');
+      const projectsGrid = document.getElementById('projects-grid');
+
+      function activateTab(tab){
+        tabs.forEach(t => {
+          const selected = t === tab;
+          t.setAttribute('aria-selected', selected ? 'true' : 'false');
+          t.tabIndex = selected ? 0 : -1;
+          const panel = document.getElementById(t.getAttribute('aria-controls'));
+          if(panel) panel.setAttribute('aria-hidden', selected ? 'false' : 'true');
+        });
+        tab.focus();
+      }
+
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => activateTab(tab));
+        tab.addEventListener('keydown', (e) => {
+          const idx = tabs.indexOf(tab);
+          if(e.key === 'ArrowRight'){ e.preventDefault(); activateTab(tabs[(idx+1)%tabs.length]); }
+          if(e.key === 'ArrowLeft'){ e.preventDefault(); activateTab(tabs[(idx-1+tabs.length)%tabs.length]); }
+          if(e.key === 'Home'){ e.preventDefault(); activateTab(tabs[0]); }
+          if(e.key === 'End'){ e.preventDefault(); activateTab(tabs[tabs.length-1]); }
+        });
+      });
+
+      // Simple project search filter
+      if(search && projectsGrid){
+        search.addEventListener('input', (e) => {
+          const q = e.target.value.trim().toLowerCase();
+          const cards = Array.from(projectsGrid.querySelectorAll('.project-card'));
+          cards.forEach(card => {
+            const title = card.dataset.title.toLowerCase();
+            card.style.display = title.includes(q) ? '' : 'none';
+          });
+          // If user types, switch to Projects tab
+          if(q.length) activateTab(document.getElementById('tab-projects'));
+        });
+      }
+
+      // Deep link support: open panel from hash
+      function openFromHash(){
+        const hash = location.hash.replace('#','');
+        if(!hash) return;
+        const tab = tabs.find(t => t.id === 'tab-' + hash);
+        if(tab) activateTab(tab);
+      }
+      window.addEventListener('hashchange', openFromHash);
+      openFromHash();
+
+      // Small accessibility: focus outline for keyboard users only
+      let mouseUsed = false;
+      window.addEventListener('mousedown', () => { mouseUsed = true; document.body.style.outline = 'none'; });
+      window.addEventListener('keydown', (e) => { if(e.key === 'Tab') { mouseUsed = false; document.body.style.outline = ''; } });
+    })();
   </script>
 </body>
 </html>
